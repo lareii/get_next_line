@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:09:56 by ebabaogl          #+#    #+#             */
-/*   Updated: 2024/11/04 14:18:47 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:59:10 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ static char	*read_file(int fd, char *buf)
 
 	tmp_str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!tmp_str)
-		return (free(tmp_str), free(buf), NULL);
+		return (free(buf), NULL);
 	while (1)
 	{
 		r_bytes = read(fd, tmp_str, BUFFER_SIZE);
 		if (r_bytes == -1)
 			return (free(tmp_str), NULL);
 		if (r_bytes == 0)
-			return (free(tmp_str), buf);
+			break ;
 		tmp_buf = ft_strjoin(buf, tmp_str);
 		if (!tmp_buf)
 			return (free(tmp_str), free(buf), NULL);
@@ -105,9 +105,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(buf);
 	if (!line)
-	{
-		free(buf);
-		buf = NULL;
-	}
+		return (free(buf), buf = NULL, NULL);
 	return (line);
 }
