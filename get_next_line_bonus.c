@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:09:56 by ebabaogl          #+#    #+#             */
-/*   Updated: 2024/11/03 14:09:23 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:31:50 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -91,25 +91,25 @@ static char	*read_file(int fd, char *buf)
 
 char	*get_next_line(int fd)
 {
-	static char	*buf;
+	static char	*buf[FD_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
-		return (free(buf), buf = NULL, NULL);
-	if (!buf)
+		return (free(buf[fd]), buf[fd] = NULL, NULL);
+	if (!buf[fd])
 	{
-		buf = ft_calloc(1, 1);
-		if (!buf)
+		buf[fd] = ft_calloc(1, 1);
+		if (!buf[fd])
 			return (NULL);
 	}
-	buf = read_file(fd, buf);
-	if (!buf)
+	buf[fd] = read_file(fd, buf[fd]);
+	if (!buf[fd])
 		return (NULL);
-	line = get_line(buf);
+	line = get_line(buf[fd]);
 	if (!line)
 	{
-		free(buf);
-		buf = NULL;
+		free(buf[fd]);
+		buf[fd] = NULL;
 	}
 	return (line);
 }
