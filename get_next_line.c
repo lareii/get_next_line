@@ -6,7 +6,7 @@
 /*   By: ebabaogl <ebabaogl@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:09:56 by ebabaogl          #+#    #+#             */
-/*   Updated: 2024/11/03 14:09:23 by ebabaogl         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:18:47 by ebabaogl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static char	*update_buffer(char *buf, int index)
 	size_t	i;
 
 	i = 0;
-	if (!buf)
-		return (NULL);
 	while (buf[index] && buf[index + 1] != '\0')
 	{
 		buf[i] = buf[index + 1];
@@ -28,7 +26,7 @@ static char	*update_buffer(char *buf, int index)
 		i++;
 	}
 	while (buf[i])
-		buf[i++] = 0;
+		buf[i++] = '\0';
 	return (buf);
 }
 
@@ -81,8 +79,8 @@ static char	*read_file(int fd, char *buf)
 		if (!tmp_buf)
 			return (free(tmp_str), free(buf), NULL);
 		free(buf);
-		ft_memset(tmp_str, 0, BUFFER_SIZE + 1);
 		buf = tmp_buf;
+		ft_memset(tmp_str, 0, BUFFER_SIZE + 1);
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}
