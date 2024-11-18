@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 5
 # endif
 
-# define FD_MAX 1024
+# define FD_MAX 4096
 
 # include <stddef.h>
 
